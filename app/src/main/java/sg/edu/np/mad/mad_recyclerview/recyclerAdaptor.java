@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -21,12 +22,12 @@ public class recyclerAdaptor extends RecyclerView.Adapter<recyclerViewHolder> {
         this.list_items=obj;
     }
 
-    public recyclerViewHolder onCreateViewHolder(ViewGroup parent,int position){
+    public recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position){
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout,parent,false);
         recyclerViewHolder holder =new recyclerViewHolder(view);
         return holder;
     }
-    public void onBindViewHolder(recyclerViewHolder holder,int position){
+    public void onBindViewHolder(final recyclerViewHolder holder,int position){
         String list_member=list_items.get(position);
         holder.txt.setText(list_member);
         holder.box.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +40,9 @@ public class recyclerAdaptor extends RecyclerView.Adapter<recyclerViewHolder> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.v(TAG,"User accepts");
+                        list_items.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        notifyItemRangeChanged(holder.getAdapterPosition(),list_items.size());
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

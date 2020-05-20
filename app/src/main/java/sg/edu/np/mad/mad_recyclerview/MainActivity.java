@@ -21,15 +21,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG="Recycler View ItemList";
 
-    Button button1= findViewById(R.id.addButton);
+    Button button1;
     ArrayList<String> recyclerList=new ArrayList<>();
     EditText nameOfItem;
+    RecyclerView myRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myRecyclerView=findViewById(R.id.checkRecycler);
         nameOfItem=findViewById(R.id.addTasks);
+        button1=findViewById(R.id.addButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,16 +42,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     Log.v(TAG,"Adding to list");
-                    addNewItem(userInput);
+                    recyclerList.add(userInput);
+                    showNewEntry(myRecyclerView,recyclerList);
+                    nameOfItem.setText("");
                 }
             }
         });
-
-
-
-
-
-
 
         RecyclerView listRecycler=findViewById(R.id.checkRecycler);
         recyclerAdaptor rAdaptor=new recyclerAdaptor(recyclerList);
@@ -67,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
     // * @param data ArrayList that was passed into RecyclerView
      //*/
 
-    private void addNewItem(String item){
-        recyclerList.add(item);
-        Log.v(TAG,"Adding new item to the recycler view");
-    }
+
+
 
 
 
@@ -82,4 +79,5 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(rv.getWindowToken(), 0);
     }
+
 }
