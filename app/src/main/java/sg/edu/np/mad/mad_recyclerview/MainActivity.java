@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG="Recycler View ItemList";
 
     Button button1;
-    ArrayList<String> recyclerList=new ArrayList<>();
+    List<String> recyclerList=new ArrayList<>();
     EditText nameOfItem;
     RecyclerView myRecyclerView;
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myRecyclerView=findViewById(R.id.checkRecycler);
+        recyclerItems(recyclerList);
         nameOfItem=findViewById(R.id.addTasks);
         button1=findViewById(R.id.addButton);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -43,19 +43,22 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     Log.v(TAG,"Adding to list");
                     recyclerList.add(userInput);
-                    showNewEntry(myRecyclerView,recyclerList);
+                    recyclerItems(recyclerList);
+                    showNewEntry(myRecyclerView,(ArrayList)recyclerList);
                     nameOfItem.setText("");
                 }
             }
         });
 
-        RecyclerView listRecycler=findViewById(R.id.checkRecycler);
-        recyclerAdaptor rAdaptor=new recyclerAdaptor(recyclerList);
-        LinearLayoutManager rLayoutManager=new LinearLayoutManager(this);
-        listRecycler.setLayoutManager(rLayoutManager);
-        listRecycler.setItemAnimator(new DefaultItemAnimator());
-        listRecycler.setAdapter(rAdaptor);
 
+
+    }
+    private void recyclerItems(List<String>rList){
+        RecyclerView myRecyclerView=findViewById(R.id.checkRecycler);
+        recyclerAdaptor rAdaptor=new recyclerAdaptor(rList);
+        LinearLayoutManager rLayoutManager=new LinearLayoutManager(this);
+        myRecyclerView.setLayoutManager(rLayoutManager);
+        myRecyclerView.setAdapter(rAdaptor);
     }
 
     ///**
@@ -65,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
     // * @param rv RecyclerView for scrolling to
     // * @param data ArrayList that was passed into RecyclerView
      //*/
-
-
-
-
 
 
     private void showNewEntry(RecyclerView rv, ArrayList data){

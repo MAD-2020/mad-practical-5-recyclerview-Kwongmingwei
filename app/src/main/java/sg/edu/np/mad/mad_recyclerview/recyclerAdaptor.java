@@ -11,23 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class recyclerAdaptor extends RecyclerView.Adapter<recyclerViewHolder> {
 
     private static final String TAG="recycler view adaptor";
 
-    private ArrayList<String> list_items;
+    private List<String> list_items= new ArrayList<String>(){};
 
-    public recyclerAdaptor(ArrayList<String> obj){
+    public recyclerAdaptor(List<String> obj){
         this.list_items=obj;
     }
 
-    public recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position){
+    @NonNull
+    @Override
+    public recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout,parent,false);
         recyclerViewHolder holder =new recyclerViewHolder(view);
         return holder;
     }
-    public void onBindViewHolder(final recyclerViewHolder holder,int position){
+
+    @Override
+    public void onBindViewHolder(@NonNull final recyclerViewHolder holder,final int position){
         String list_member=list_items.get(position);
         holder.txt.setText(list_member);
         holder.box.setOnClickListener(new View.OnClickListener() {
@@ -35,9 +40,8 @@ public class recyclerAdaptor extends RecyclerView.Adapter<recyclerViewHolder> {
             public void onClick(View v) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Would you like to delete this item?");
-                builder.setCancelable(false);
+                builder.setCancelable(true);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.v(TAG,"User accepts");
                         list_items.remove(holder.getAdapterPosition());
@@ -57,6 +61,8 @@ public class recyclerAdaptor extends RecyclerView.Adapter<recyclerViewHolder> {
             }
         });
     }
+
+    @Override
     public int getItemCount(){
         return list_items.size();
     }
