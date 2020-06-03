@@ -16,5 +16,4 @@ public class recyclerViewHolder extends RecyclerView.ViewHolder {
         txt=itemView.findViewById(R.id.itemName);
         box=itemView.findViewById(R.id.checkBox);
     }
-
 }

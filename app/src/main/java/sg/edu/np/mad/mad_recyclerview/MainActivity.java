@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myRecyclerView=findViewById(R.id.checkRecycler);
+
         recyclerItems(recyclerList);
         nameOfItem=findViewById(R.id.addTasks);
         button1=findViewById(R.id.addButton);
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showNewEntry(RecyclerView rv, ArrayList data){
+        for (int i=0;i<recyclerList.size();i++){
+            Log.v(TAG,""+recyclerList.get(i));
+        }
         //scroll to the last item of the recyclerview
         rv.scrollToPosition(data.size() - 1);
 
